@@ -13,19 +13,28 @@ module.exports.seed = async (log = true) => {
 
     await Promise.all(
         Array.from(Array(100).keys()).map(async () => {
+            
             const resp = await User.create({
-                name: faker.name.firstName()
+                name: faker.name.firstName(),
+                
+               
             });
             if (log) console.log(chalk.blue("Created user's name: ", resp.name));
 
             const postCount = Math.round((Math.random() * 4)) + 1; 
+            //console.log(Array(postCount).keys(),"+",postCount," + ", Array.from(Array(postCount).keys()))
+            
             await Promise.all(
                 Array.from(Array(postCount).keys()).map(async () => {
+                    //console.log("i am running this much time" + `${resp._id}`)
+                
                     await Post.create({
                         userId: resp._id,
                         title: faker.lorem.sentence(),
+            
                         description: faker.lorem.paragraph(10)
                     });
+                    
                 })
             );
         })
